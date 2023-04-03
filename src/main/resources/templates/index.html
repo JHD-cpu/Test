@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/jquery/jquery-3.5.1.min.js"></script>
+    <script type="application/javascript">
+     window.onload=function (){
+
+
+         document.getElementById("redisStreamMessagePut").onclick=  function  () {
+
+             console.log("start")
+             let data= {"key": document.getElementById("redisStreamMessageKey").value,
+                 "value": document.getElementById("redisStreamMessageValue").value,
+                 "streamName": document.getElementById("redisStreamMessageName").value,
+             };
+             console.log(data)
+             $.ajax({
+                 url: "/redis/putStreamMessageSend",
+                 type: "post",
+                 data: data,
+                 success: function (data) {
+                     alert("成功");
+                 }
+             })
+         };
+         document.getElementById("createComsumer").onclick=  function  () {
+
+             console.log("start")
+             let data= {
+                 "group":document.getElementById("redisStreamGroup").value,
+                 "comsumer": document.getElementById("redisStreamComsumer").value,
+                 "streamName":document.getElementById("redisStreamName").value
+             };
+             console.log(data)
+             $.ajax({
+                 url: "/redis/createComsumer",
+                 type: "post",
+                 dataTypes:"json",
+                 data: data,
+                 success: function (data) {
+                     alert("成功");
+                 }
+             })
+         };
+         document.getElementById("redisMQPut").onclick=  function  () {
+
+             console.log("start")
+             let data= {"key": document.getElementById("redisMQName").value, "value": document.getElementById("redisMQValue").value};
+             console.log(data)
+             $.ajax({
+                 url: "/redis/putMQMessage",
+                 type: "post",
+                 dataTypes:"json",
+                 data: data,
+                 success: function (data) {
+                     alert("成功");
+                 }
+             })
+         };
+         document.getElementById("redisPut").onclick=  function  () {
+
+             console.log("start")
+             let data= {"name": document.getElementById("redisName").value, "value": document.getElementById("redisValue").value};
+             console.log(data)
+             $.ajax({
+                 url: "/redis/put",
+                 type: "post",
+                 dataTypes:"json",
+                 data: data,
+                 success: function (data) {
+                     alert("成功");
+                 }
+             })
+         };
+         document.getElementById("redisGet").onclick=  function  () {
+
+             console.log("start")
+             let data= {"name": document.getElementById("redisName").value };
+             console.log(data)
+             $.ajax({
+                 url: "/redis/get",
+                 type: "post",
+                 dataTypes:"json",
+                 data: data,
+                 success: function (data) {
+                     document.getElementById("redisValue").value=data;
+                 }
+             })
+         };
+       document.getElementById("sessionPut").onclick=  function  () {
+
+           console.log("start")
+           let data= {"name": document.getElementById("name").value, "value": document.getElementById("value").value};
+           console.log(data)
+           $.ajax({
+                 url: "/session/put",
+                 type: "post",
+                 dataTypes:"json",
+                 data: data,
+                 success: function (data) {
+                    alert("成功");
+                 }
+             })
+         };
+
+         document.getElementById("sessionGet").onclick=     function () {
+            let  data={"name": document.getElementById("name").value};
+                console.log(data);
+             $.ajax({
+                 url: "/session/get",
+                 type: "post",
+                 dataTypes:"json",
+                 data: data,
+                 success: function (data) {
+                     document.getElementById("value").value=data;
+                 }
+             })
+         };
+     }
+
+</script>
+    <style>
+        .div{
+            background-color: blueviolet;
+            width: 400px;
+            height: auto;
+            box-shadow: inset 10px 7px 10px -2px rgb(0 0 0.5);
+            border-radius: 12px;
+            text-align: center;
+            padding: 5px;
+            margin: 15px;
+        }
+        button{
+            width: 50px;
+            height: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 3px;
+        }
+        label{
+            font-size: 16px;
+            font-weight: bold;
+            color: aliceblue;
+            margin: 3px;
+        }
+        input{
+            width: 120px;
+            height: 25px;
+            margin: 3px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="div" name="session">
+    <h1>session</h1>
+    <label>name</label><input type="text" id="name"/><br>
+    <label>value</label><input type="text" id="value"/> <br>
+    <button id="sessionPut"  >put</button>
+    <button id="sessionGet"  >get</button>
+</div>
+<div class="div" name="redis">
+    <h1>redis</h1>
+    <label>name</label><input type="text" id="redisName"/><br>
+    <label>value</label><input type="text" id="redisValue"/> <br>
+    <button id="redisPut" >put</button>
+    <button id="redisGet"  >get</button>
+</div>
+<div class="div" name="redisMQ">
+    <h1>redis MQ</h1>
+    <label>name</label><input type="text" id="redisMQName"/><br>
+    <label>value</label><input type="text" id="redisMQValue"/> <br>
+    <button id="redisMQPut" >put</button>
+</div>
+<div class="div" name="redisStream">
+    <h1>redis Stream  comsumer</h1>
+    <label>StreamName</label><input type="text" id="redisStreamName"/> <br>
+    <label>group</label><input type="text" id="redisStreamGroup"/><br>
+    <label>comsumer</label><input type="text" id="redisStreamComsumer"/> <br>
+    <button id="createComsumer" >create</button>
+</div>
+<div class="div" name="redisStreamMessage">
+    <h1>redis Stream message send producer</h1>
+    <label>StreamName</label><input type="text" id="redisStreamMessageName"/> <br>
+    <label>key</label><input type="text" id="redisStreamMessageKey"/><br>
+    <label>value</label><input type="text" id="redisStreamMessageValue"/> <br>
+    <button id="redisStreamMessagePut" >send</button>
+</div>
+</body>
+</html>

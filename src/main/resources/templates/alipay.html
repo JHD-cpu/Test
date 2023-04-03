@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/jquery/jquery-3.5.1.min.js"></script>
+    <script src="/qrcode.js"></script>
+    <style>
+        #payDiv {
+            width: 100%;
+            height: 100%;
+            background-color: antiquewhite;
+        }
+
+        html, body {
+            width: 100%;
+            height: 80%;
+        }
+    </style>
+</head>
+<body>
+
+
+<dl>
+
+    <dd>
+        <input type="text" placeholder="goods" id="goods" name="goods" value="">
+    </dd>
+    <dd>
+        <input type="text" placeholder="amount" id="amount" name="amount" value="">
+    </dd>
+    <dd>
+        <button id="orderPut">submit</button>
+    </dd>
+
+</dl>
+<iframe id="payDiv">
+
+</iframe>
+<script type="application/javascript">
+    var payPage;
+    window.onload = function () {
+        document.getElementById("orderPut").onclick = function () {
+            let data = {
+                "goods": document.getElementById("goods").value,
+                "amount": document.getElementById("amount").value,
+            }
+            console.log(JSON.stringify(data))
+            $.ajax({
+                url: "/alipay/getPayPage",
+                type: "post",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data) {
+                    var dom = document.getElementById("payDiv").contentWindow.document;
+                    dom.body.innerHTML = data;
+                    dom.forms[0].submit();
+                }
+            })
+        }
+    }
+</script>
+
+</body>
+</html>

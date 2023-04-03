@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.testSpring.mapper.UserMapper">
+
+    <resultMap id="UserResultMap"  type="User">
+        <result property="id" column="id" jdbcType="VARCHAR"></result>
+        <result property="name" column="name" jdbcType="VARCHAR"></result>
+        <result property="age" column="age" jdbcType="VARCHAR"></result>
+        <result property="email" column="email" jdbcType="VARCHAR"></result>
+        <result property="create" column="create" jdbcType="DATE"></result>
+        <result property="update" column="update" jdbcType="DATE"></result>
+    </resultMap>
+    <sql id="UserColumns">
+        `id`,`name`,`age`,`email`,`create`,`update`
+    </sql>
+    <select id="findAll" resultMap="UserResultMap">
+        select  <include refid="UserColumns"/> from user;
+    </select>
+    <insert id="inster"  parameterType="list" >
+        insert into user
+        values
+        <foreach item="item" separator=","  collection="list">
+            (#{item.id},#{item.name},#{item.age},#{item.email},#{item.create},#{item.update})
+        </foreach>
+    </insert>
+</mapper>

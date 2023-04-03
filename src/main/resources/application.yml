@@ -1,0 +1,83 @@
+# 应用名称
+spring:
+  profiles:
+    active: dev
+  application:
+    name: testSpring
+# mysql
+  datasource:
+    password: 123456
+    username: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/test?characterEncoding=UTF-8
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      connection-timeout: 1000
+      keepalive-time: 3000
+  # session
+  session:
+    timeout: 3000
+    redis:
+      namespace: session
+      flush-mode: on_save
+# redis
+  redis:
+    port: 6379
+    host: 127.0.0.1
+    database: 0
+# 静态资源，页面配置
+  web:
+    resources:
+      static-locations: classpath:/templates/,classpath:/static/
+  webflux:
+    hiddenmethod:
+      filter:
+        enabled: true
+# kafka
+  kafka:
+    open: false
+    producer:
+      acks: -1
+      #批处理大小 字节单位
+      batch-size: 1000
+      compression-type: gzip
+      retries: 34
+    consumer:
+      group-id: my_topic_group
+      enable-auto-commit: true
+      auto-offset-reset: earliest
+    listener:
+      concurrency: 3
+      ack-count: 10
+      ack-mode: count
+      type: batch
+    bootstrap-servers:  127.0.0.1:9092
+  mvc:
+    async:
+      request-timeout: 3000
+    dispatch-options-request: true
+    contentnegotiation:
+      favor-parameter: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  elasticsearch:
+    open: false
+    uris: http://127.0.0.1:9900
+
+# 应用服务 WEB 访问端口
+server:
+  port: 8877
+# 日志
+logging:
+  level:
+    com.example.testSpring: debug
+  file:
+    path: /LOG/log
+
+mybatis:
+  type-aliases-package: com.example.testSpring.entity
+  mapper-locations: classpath:/mapper/*.xml
+mybatis-plus:
+  type-aliases-package: com.example.testSpring.entity
+  mapper-locations: classpath:/mapper/*.xml
