@@ -12,6 +12,7 @@ import com.example.testSpring.Utils.JSONUtils;
 import com.example.testSpring.entity.Orders;
 import com.example.testSpring.service.AliPayService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,10 +22,12 @@ import java.util.UUID;
 @Slf4j
 public class AliPayServiceImpl implements AliPayService {
 
+  @Autowired
+  private AlipayClient alipayClient;
+
   @Override
   public String batchPay(Orders orders) {
     try {
-      AlipayClient alipayClient = AliPayClientFactory.getDefaultAlipayClient();
       BatchAlipayRequest batchAlipayRequest = new BatchAlipayRequest();
       AlipayTradePagePayModel alipayTradePrecreateModel = new AlipayTradePagePayModel();
       String tradeNo = UUID.randomUUID().toString().replaceAll("-", "");
@@ -38,14 +41,12 @@ public class AliPayServiceImpl implements AliPayService {
     } catch (AlipayApiException e) {
       e.printStackTrace();
     }
-
     return null;
   }
 
   @Override
   public String pay(Orders orders) {
     try {
-      AlipayClient alipayClient = AliPayClientFactory.getDefaultAlipayClient();
       AlipayTradePrecreateRequest alipayTradePrecreateRequest = new AlipayTradePrecreateRequest();
       AlipayTradePrecreateModel alipayTradePrecreateModel = new AlipayTradePrecreateModel();
       String tradeNo = UUID.randomUUID().toString().replaceAll("-", "");
@@ -68,10 +69,11 @@ public class AliPayServiceImpl implements AliPayService {
 
   public String payFrom(Orders orders) {
     try {
-      AlipayClient alipayClient = AliPayClientFactory.getDefaultAlipayClient();
       AlipayTradePagePayRequest alipayTradePagePayRequest = new AlipayTradePagePayRequest();
       AlipayTradePagePayModel alipayTradePagePayModel = new AlipayTradePagePayModel();
       String tradeNo = UUID.randomUUID().toString().replaceAll("-", "");
+
+      alipayTradePagePayModel.setGoodsType("1");
       alipayTradePagePayModel.setOutTradeNo(tradeNo);
       alipayTradePagePayModel.setTotalAmount(orders.getAmount());
       alipayTradePagePayModel.setSubject(orders.getGoods());

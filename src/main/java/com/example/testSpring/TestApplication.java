@@ -10,10 +10,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @EnableElasticsearchRepositories
 @MapperScan(basePackages = "com.example.testSpring.mapper")
-public class TestSpringApplication {
+public class TestApplication {
 
     public static void main(String[] args) {
         System.setProperty("es.set.netty.runtime.available.processors","false");
-        SpringApplication.run(TestSpringApplication.class, args);
+        SpringApplication.run(TestApplication.class, args);
     }
 }   

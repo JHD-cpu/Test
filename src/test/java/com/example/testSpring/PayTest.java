@@ -9,6 +9,7 @@ import com.alipay.api.request.AlipayTradePrecreateRequest;
 import com.alipay.api.response.AlipayTradePagePayResponse;
 import com.alipay.api.response.AlipayTradePrecreateResponse;
 import com.example.testSpring.Utils.AliPayClientFactory;
+import com.example.testSpring.config.AliPayConfig;
 
 import java.util.UUID;
 
@@ -18,7 +19,7 @@ public class PayTest {
     tradePagePay();
   }
   public static void  tradePagePay() throws AlipayApiException {
-    AlipayClient alipayClient = AliPayClientFactory.getDefaultAlipayClient();
+    AlipayClient alipayClient = new AliPayConfig().alipayClient(new AliPayConfig().alipayConfig());
     AlipayTradePagePayRequest alipayTradePrecreateRequest = new AlipayTradePagePayRequest();
     AlipayTradePagePayModel alipayTradePrecreateModel=new AlipayTradePagePayModel();
     String tradeNo = UUID.randomUUID().toString().replaceAll("-", "");
@@ -31,7 +32,7 @@ public class PayTest {
     System.out.println(execute.getBody());
   }
   public void  preCreate() throws AlipayApiException {
-    AlipayClient alipayClient = AliPayClientFactory.getDefaultAlipayClient();
+    AlipayClient alipayClient = new AliPayConfig().alipayClient(new AliPayConfig().alipayConfig());
     AlipayTradePrecreateRequest alipayTradePrecreateRequest = new AlipayTradePrecreateRequest();
     AlipayTradePrecreateModel alipayTradePrecreateModel=new AlipayTradePrecreateModel();
     String tradeNo = UUID.randomUUID().toString().replaceAll("-", "");

@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/alipay")
 @Slf4j
@@ -27,12 +29,12 @@ public class AlipayController {
 
 
     /**
-     *  支付回调
-     * @param orders
+     *  支付回调 /alipay/putPayCall
+     * @param map
      * @return
      */
     @PostMapping("/putPayCall")
-    public String putPayCall( String orders)  {
+    public String putPayCall(@RequestBody Map<String,Object> map)  {
         return  "true";
     }
 }
